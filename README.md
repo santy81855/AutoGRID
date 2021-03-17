@@ -4,11 +4,9 @@
 
 - This is just in case something gets messed up for whatever reason.
 
-# Step 1. Download the contents of this github repository
+# Step 1. Download the script from the link below:
 
-- click the green 'code' button and then click 'download zip'
-- Extract the files and place only the 'script.exe' file in the folder where you will place your grid and attendance reports.
-- Any files that are not the script.exe can be deleted without worry.
+- https://drive.google.com/file/d/1tQp1H65QehOkBEhhf9RNsjdwmTy0ZqdA/view?usp=sharing
 
 # Step 2. Download Zoom attendance reports
 
