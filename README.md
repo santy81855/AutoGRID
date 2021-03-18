@@ -6,7 +6,7 @@
 
 # Step 1. Download the script from the link below:
 
-- https://drive.google.com/file/d/1tQp1H65QehOkBEhhf9RNsjdwmTy0ZqdA/view?usp=sharing
+- [Program Link](https://drive.google.com/file/d/1UXEVBG3RLQUZE7pIOD4LSwQfnvFy8E_w/view?usp=sharing "Program Link")
 
 # Step 2. Download Zoom attendance reports
 
