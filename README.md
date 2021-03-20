@@ -1,4 +1,4 @@
-# How to use the script video instructions: (Video Link coming soon)
+# How to use the script video instructions: [YouTube Link](https://youtu.be/ZyBdRUbwIjI)
 
 # Step 0. MAKE A COPY OF YOUR GRID
 
