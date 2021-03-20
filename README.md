@@ -1,4 +1,4 @@
-# How to use the script video instructions: [Video Link](https://youtu.be/4beUfSjgPsk)
+# How to use the script video instructions: (Video Link coming soon)
 
 # Step 0. MAKE A COPY OF YOUR GRID
 
@@ -8,7 +8,7 @@
 
 - [Windows Program Link](https://drive.google.com/file/d/166J0cIS0-hmGd7CHkHIdDbLyjBSP9_OM/view?usp=sharing "Windows")
 - [Ubuntu Program Link](https://drive.google.com/file/d/1loAhUNe2KXWPO99ArQU-DhbQzdYNhnW_/view?usp=sharing "Ubuntu")
-- [MacOS Program Link](Coming Soon)
+- MacOS Program Link Coming Soon
 
 # Step 2. Download Zoom attendance reports
 
@@ -38,27 +38,28 @@
 
 # Step 3. Open the grid
 
-- You will be asked a few questions about your grid since each grid has a different number of students.
+- You will be asked a few questions about your grid since each grid has a different number of students. 
 - Make note of the number of the first blank row in your grid.
 - Look at the image below as an example. The number of the first blank row is 506. If the 2 names were not there then it would be 504.
   ![IMAGE](Pictures/grid1.png)
 - The next row number to make a note of is the row where all of the attendance gets added up on. We would not want to overwrite that.
 - In the image below, the row number we would want is 554. Make sure you don't get it confused with 503, which also has the sums of attendance.
   ![IMAGE](Pictures/grid2.png)
+- The next row number to make note of is the row that has the text 'names not listed'
 
 # Step 4. Close the grid and all attendance reports
 
-- If these are open when we run the script then it will not work.
+- These need to be closed for the program to work, otherwise it may just crash and you will have to restart.
 
 # Step 5. Make sure that you have the following in the same folder:
 
 - Grid
-- script.exe
+- autoGRID.exe (make sure you have the one for your operating system)
 - All attendance reports
 
 # Step 6. Run the script
 
-- This is as easy as clicking on the 'script.exe' file in your folder.
+- This is as easy as clicking on the autoGRID.exe file in your folder.
 - Answer each of the questions as mentioned above and in the video.
 - At the end it will show you the list of names it couldn't put in the grid for whatever reason, so you can add them yourself.
 - When you are done using the app, you can just type any letter and press enter to exit the script.
