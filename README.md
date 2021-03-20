@@ -6,17 +6,34 @@
 
 # Step 1. Download the script from the link below:
 
-- [Program Link](https://drive.google.com/file/d/1UXEVBG3RLQUZE7pIOD4LSwQfnvFy8E_w/view?usp=sharing "Program Link")
+- [Windows Program Link](https://drive.google.com/file/d/166J0cIS0-hmGd7CHkHIdDbLyjBSP9_OM/view?usp=sharing "Windows")
+- [Ubuntu Program Link](https://drive.google.com/file/d/1loAhUNe2KXWPO99ArQU-DhbQzdYNhnW_/view?usp=sharing "Ubuntu")
+- [MacOS Program Link](Coming Soon)
 
 # Step 2. Download Zoom attendance reports
 
 - Download all of the Zoom reports that you want to record in your grid.
 - The reports can be reached by clicking Reports->Usage
 - Make sure you check "Show unique users" before pressing export. This is important.
-- Don't worry about your name showing up in the report, the script accounts for that.
-- As you download each one, make sure that you are naming it after the day of the month that the meeting happened.
-- For example, if you are downloading the attendance report for 2/18/21, name it 18
-- Here is an image of what your folder should look like once you have downloaded several attendance reports:
+- Don't worry about your name showing up in the report, the program accounts for that.
+- As you download each one, make sure that you are naming it using the following process:
+  - write down the day of the month that the session occurred in. 
+    - Ex: if the session is on 2/3/21, your title so far will be: 3
+    - Ex: if the session is on 2/15/21, your title so far will be: 15
+  - if it is one of multiple sessions in the same day, write a dash. 
+    - Ex: if you have 2 or more sessions on 2/3/21, your title so far will be: 3-
+    - Ex: if you have 2 or more sessions on 2/15/21, your title so far will be: 15-
+  - if it is one of multiple sessions write if it is the 1st, 2nd, 3rd, etc session of that day. 
+    - Ex: if you have 2 or more sessions on 2/3/21 and this is the first one, your title so far will be: 3-1
+    - Ex: if you have 2 or more sessions on 2/15/21 and this is the second one, your title so far will be: 15-2
+  - if it is a review session, write a lowercase r directly at the end
+    - Ex: if you have 2 or more sessions on 2/3/21 and the first one is a review, your title so far will be: 3-1r
+    - Ex: if you have 2 or more sessions on 2/3/21 and the third one is a review, your title so far will be: 3-3r
+    - Ex: if you have 2 or more sessions on 2/15/21 and the second one is a review, your title so far will be: 15-2r
+  - Naming the attendance reports correctly will be crucial for the program to run properly.
+- Here is an image of what your folder might look like once you have downloaded several complicated attendance reports:
+  ![IMAGE](Pictures/complex.png)
+- Here is an image of what it might look like if you don't have any reviews and all of your sessions are on different days. It looks much nicer:
   ![IMAGE](Pictures/folder.png)
 
 # Step 3. Open the grid
