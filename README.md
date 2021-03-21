@@ -6,8 +6,8 @@
 
 # Step 1. Download the script from the link below:
 
-- [Windows Program Link](https://drive.google.com/file/d/166J0cIS0-hmGd7CHkHIdDbLyjBSP9_OM/view?usp=sharing "Windows")
-- [Ubuntu Program Link](https://drive.google.com/file/d/1loAhUNe2KXWPO99ArQU-DhbQzdYNhnW_/view?usp=sharing "Ubuntu")
+- [Windows Program Link](https://drive.google.com/file/d/10aF93WIm0GppOFVVP8WDWILgIwMNaWaY/view?usp=sharing "Windows")
+- [Ubuntu Program Link](https://drive.google.com/file/d/14bIVZYN4xORyQImkJ9SQQXz4rC18lkhW/view?usp=sharing "Ubuntu")
 - MacOS Program Link Coming Soon
 
 # Step 2. Download Zoom attendance reports
