@@ -8,7 +8,7 @@
 
 - [Windows Program Link](https://drive.google.com/file/d/10aF93WIm0GppOFVVP8WDWILgIwMNaWaY/view?usp=sharing "Windows")
 - [Ubuntu Program Link](https://drive.google.com/file/d/14bIVZYN4xORyQImkJ9SQQXz4rC18lkhW/view?usp=sharing "Ubuntu")
-- MacOS Program Link Coming Soon
+- [MacOS Program Link](https://drive.google.com/file/d/125wB-xjEZ7ZzZnDn_G2h4SrVCDBavt5r/view?usp=sharing "MacOS)
 
 # Step 2. Download Zoom attendance reports
 
