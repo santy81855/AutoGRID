@@ -4,7 +4,7 @@
 
 - This is just in case something gets messed up for whatever reason.
 
-# Step 1. Download the script from the link below:
+# Step 1. Download the program from the link below:
 
 - [Windows Program Link](https://drive.google.com/file/d/10aF93WIm0GppOFVVP8WDWILgIwMNaWaY/view?usp=sharing "Windows")
 - [Ubuntu Program Link](https://drive.google.com/file/d/14bIVZYN4xORyQImkJ9SQQXz4rC18lkhW/view?usp=sharing "Ubuntu")
@@ -57,7 +57,7 @@
 - autoGRID.exe (make sure you have the one for your operating system)
 - All attendance reports
 
-# Step 6. Run the script
+# Step 6. Run the program
 
 - This is as easy as clicking on the autoGRID.exe file in your folder.
 - Answer each of the questions as mentioned above and in the video.
