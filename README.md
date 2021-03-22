@@ -32,9 +32,9 @@
     - Ex: if you have 2 or more sessions on 2/15/21 and the second one is a review, your title so far will be: 15-2r
   - Naming the attendance reports correctly will be crucial for the program to run properly.
 - Here is an image of what your folder might look like once you have downloaded several complicated attendance reports:
-  ![IMAGE](Pictures/complex.png)
+  - ![IMAGE](Pictures/complex.png)
 - Here is an image of what it might look like if you don't have any reviews and all of your sessions are on different days. It looks much nicer:
-  ![IMAGE](Pictures/folder.png)
+  - ![IMAGE](Pictures/folder.png)
 
 # Step 3. Open the grid
 
