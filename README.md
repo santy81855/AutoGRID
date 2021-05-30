@@ -6,8 +6,8 @@
 
 # Step 1. Download the program from the link below:
 
-- [Windows Program Link](https://drive.google.com/file/d/10aF93WIm0GppOFVVP8WDWILgIwMNaWaY/view?usp=sharing "Windows")
-- [Ubuntu Program Link](https://drive.google.com/file/d/14bIVZYN4xORyQImkJ9SQQXz4rC18lkhW/view?usp=sharing "Ubuntu")
+- [Windows Program Link](https://drive.google.com/file/d/1ShCLHH6Vb48q8BpUG8-4YbrkRtsqD6xy/view?usp=sharing "Windows")
+- [Ubuntu Program Link](https://drive.google.com/file/d/1Robhkl003n1pYV8FIgzThd_1GZTO5VzS/view?usp=sharing "Ubuntu")
 - [MacOS Program Link](https://drive.google.com/file/d/11bztiMGcXCJZnUhwJCiNBDpB8-vBKwsC/view?usp=sharing "MacOS")
 
 # Step 2. Download Zoom attendance reports
