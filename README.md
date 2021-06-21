@@ -4,11 +4,11 @@
 
 - This is just in case something gets messed up for whatever reason.
 
-# Step 1. Download the program from the link below:
+# Step 1. Download the program for your platform:
 
 - [Windows Program Link](https://drive.google.com/file/d/1ShCLHH6Vb48q8BpUG8-4YbrkRtsqD6xy/view?usp=sharing "Windows")
 - [Ubuntu Program Link](https://github.com/santy81855/AutoGRID/raw/main/autoGRIDlinux "Ubuntu")
-- [MacOS Program Link](https://drive.google.com/file/d/11bztiMGcXCJZnUhwJCiNBDpB8-vBKwsC/view?usp=sharing "MacOS")
+- [MacOS Program Link](https://github.com/santy81855/AutoGRID/raw/main/autoGRIDmacOS "MacOS")
 
 # Step 2. Download Zoom attendance reports
 
