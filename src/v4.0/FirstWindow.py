@@ -19,7 +19,7 @@ from PyQt5.QtGui import QColor, QPainter, QTextFormat, QLinearGradient
 import os
 import ctypes
 
-import TitleBar, config, AutoGrid, Welcome, Month, Zoom, Grid, Person, Extra
+import TitleBar, config, AutoGrid, Welcome, Month, Zoom, Grid, Person, Extra, Observation, Exam, Loading
 
 class MainWindow(QFrame):
     def __init__(self):
@@ -91,8 +91,17 @@ class MainWindow(QFrame):
         # index 5 asks if you've been observed or had any exams
         self.extra = Extra.ExtraScreen(self)
         self.stack.addWidget(self.extra)
+        # index 6 is the observation screen
+        self.observation = Observation.ObservationScreen(self)
+        self.stack.addWidget(self.observation)
+        # index 7 is the exams screen
+        self.exam = Exam.ExamScreen(self)
+        self.stack.addWidget(self.exam)
+        # index 8 is the loading screen
+        self.loading = Loading.LoadingScreen(self)
+        self.stack.addWidget(self.loading)
         # start on the latest widget for testing purposes
-        config.stack.setCurrentIndex(5)
+        #config.stack.setCurrentIndex(8)
         #------------------------------------------#
         # add the stacked widget to the vertical layout
         self.layout.addWidget(self.stack, 95)
@@ -589,7 +598,115 @@ class MainWindow(QFrame):
             examDropdownFont.setFamily("Serif")
             examDropdownFont.setFixedPitch( True )
             examDropdownFont.setPointSize( self.width() / 40 )
-            config.extraScreen.examSelect.setFont(examDropdownFont)    
+            config.extraScreen.examSelect.setFont(examDropdownFont) 
+
+            # observation title
+            observedFont = QFont()
+            observedFont.setFamily("Serif")
+            observedFont.setFixedPitch( True )
+            observedFont.setPointSize( self.width() / 44 )
+            config.observationScreen.observedText.setFont(observedFont) 
+
+            # first horizontal layout stuff
+            # observer 1 | name1 | last1
+            # observer size
+            config.observationScreen.observer1.setFixedHeight(self.width() / 24)
+            config.observationScreen.observer1.setFixedWidth(self.width() / 3)
+            config.observationScreen.observer2.setFixedHeight(self.width() / 24)
+            config.observationScreen.observer2.setFixedWidth(self.width() / 3)
+            config.observationScreen.observer3.setFixedHeight(self.width() / 24)
+            config.observationScreen.observer3.setFixedWidth(self.width() / 3)
+            config.observationScreen.observer4.setFixedHeight(self.width() / 24)
+            config.observationScreen.observer4.setFixedWidth(self.width() / 3)
+            # observer font
+            observerNumberFont = QFont()
+            observerNumberFont.setFamily("Serif")
+            observerNumberFont.setFixedPitch( True )
+            observerNumberFont.setPointSize( self.width() / 53 )
+            config.observationScreen.observer1.setFont(observerNumberFont)   
+            config.observationScreen.observer2.setFont(observerNumberFont)   
+            config.observationScreen.observer3.setFont(observerNumberFont)   
+            config.observationScreen.observer4.setFont(observerNumberFont)   
+
+            # first name size
+            config.observationScreen.name1.setFixedHeight(self.width() / 24)
+            config.observationScreen.name1.setFixedWidth(self.width() / 5)
+            config.observationScreen.name2.setFixedHeight(self.width() / 24)
+            config.observationScreen.name2.setFixedWidth(self.width() / 5)
+            config.observationScreen.name3.setFixedHeight(self.width() / 24)
+            config.observationScreen.name3.setFixedWidth(self.width() / 5)
+            config.observationScreen.name4.setFixedHeight(self.width() / 24)
+            config.observationScreen.name4.setFixedWidth(self.width() / 5)
+            # last name size
+            config.observationScreen.last1.setFixedHeight(self.width() / 24)
+            config.observationScreen.last1.setFixedWidth(self.width() / 5)
+            config.observationScreen.last2.setFixedHeight(self.width() / 24)
+            config.observationScreen.last2.setFixedWidth(self.width() / 5)
+            config.observationScreen.last3.setFixedHeight(self.width() / 24)
+            config.observationScreen.last3.setFixedWidth(self.width() / 5)
+            config.observationScreen.last4.setFixedHeight(self.width() / 24)
+            config.observationScreen.last4.setFixedWidth(self.width() / 5)
+
+            # first and last font
+            textFont = QFont()
+            textFont.setFamily("Serif")
+            textFont.setFixedPitch( True )
+            textFont.setPointSize( self.width() / 53 )
+            
+            config.observationScreen.name1.setFont(textFont)    
+            config.observationScreen.last1.setFont(textFont)    
+            config.observationScreen.name2.setFont(textFont)    
+            config.observationScreen.last2.setFont(textFont)    
+            config.observationScreen.name3.setFont(textFont)    
+            config.observationScreen.last3.setFont(textFont)    
+            config.observationScreen.name4.setFont(textFont)    
+            config.observationScreen.last4.setFont(textFont)
+
+            # continue button size
+            config.observationScreen.observationButton.setFixedHeight(self.width() / 12)
+            config.observationScreen.observationButton.setFixedWidth(self.width() / 3)
+            
+            # set the font of teh button
+            observationButtonFont = QFont()
+            observationButtonFont.setFamily("Serif")
+            observationButtonFont.setFixedPitch( True )
+            observationButtonFont.setPointSize( self.width() / 35 )
+            config.observationScreen.observationButton.setFont(observationButtonFont)
+
+            # Exam title font
+            examFont = QFont()
+            examFont.setFamily("Serif")
+            examFont.setFixedPitch( True )
+            examFont.setPointSize( self.height() / 20 )
+            config.examScreen.examText.setFont(examFont)
+
+            # Button sizes & font
+            monthButtonFont = QFont()
+            monthButtonFont.setFamily("Serif")
+            monthButtonFont.setFixedPitch( True )
+            monthButtonFont.setPointSize( self.height() / 40 )
+            for i in range(0, 31):
+                config.examScreen.buttonArr[i].setFixedHeight(self.height() / 18)
+                config.examScreen.buttonArr[i].setFixedWidth(self.width() / 18)
+                config.examScreen.buttonArr[i].setFont(monthButtonFont)   
+            
+            # exam button
+            examButtonFont = QFont()
+            examButtonFont.setFamily("Serif")
+            examButtonFont.setFixedPitch( True )
+            examButtonFont.setPointSize( self.width() / 35 )
+            config.examScreen.examButton.setFont(examButtonFont)
+            config.examScreen.examButton.setFixedHeight(self.width() / 12)
+            config.examScreen.examButton.setFixedWidth(self.width() / 3)
+
+            # loading screen font
+            loadingFont = QFont()
+            loadingFont.setFamily("Serif")
+            loadingFont.setFixedPitch( True )
+            loadingFont.setPointSize( self.width() / 27 )
+            config.loadingScreen.loadingText.setFont(loadingFont)
+
+
         # if they are resizing
         # need to subtract the movement from the width/height 
         # but I also need to account for if they are resizing horizontally from the left or

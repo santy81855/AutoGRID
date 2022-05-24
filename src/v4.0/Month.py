@@ -138,15 +138,9 @@ class MonthScreen(QWidget):
         global current_month
         # get the current index and set it as the current month
         if self.monthSelect.currentIndex() != 0:
-            AutoGrid.current_monthh = self.monthSelect.currentIndex()
+            AutoGrid.current_month = self.monthSelect.currentIndex()
             # move to the next screenn (zoom)
             config.stack.setCurrentIndex(2)
-        else:
-            print("hello??")
-            
-        
-        # convert it into a month
-        #config.stack.setCurrentIndex(2)
     
     def mouseMoveEvent(self, event):
         QApplication.setOverrideCursor(Qt.ArrowCursor)

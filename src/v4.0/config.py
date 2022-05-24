@@ -34,6 +34,12 @@ gridScreen = None
 personScreen = None
 # store the extra questions screen
 extraScreen = None
+# observation screen
+observationScreen = None
+# exam screen
+examScreen = None
+# loading screen
+loadingScreen = None
 
 
 # variable to be able to snap to sides and corners

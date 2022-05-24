@@ -151,7 +151,15 @@ class GridScreen(QWidget):
         
 
     def pressedContinue(self):
-        config.stack.setCurrentIndex(4)
+        # if they have not entered a grid make the label red
+        if self.numFiles.text() == '':
+            self.numFiles.setStyleSheet("""
+            background-color:""" + config.numberColor + """;
+            color: black; 
+            text-align:center;
+                                    """)
+        else:
+            config.stack.setCurrentIndex(4)
     
     def mouseMoveEvent(self, event):
         QApplication.setOverrideCursor(Qt.ArrowCursor)

@@ -142,6 +142,7 @@ class ZoomScreen(QWidget):
     def pressedBrowse(self):
         global zoom_attendance_reports
         global zoom_days
+        global num_zoom_attendance_reports
         # get the names of all the attendance reports
         # allow both xlsx and csv so that people can't mess up
         aTuple = QFileDialog.getOpenFileNames(self, 'open files', '', 'CSV files (*.csv)')
@@ -199,6 +200,7 @@ class ZoomScreen(QWidget):
                 else:
                     AutoGrid.zoom_days.append(temp[lastIndex - 4])
             config.zoomScreen.numFiles.setText(str(len(aTuple[0])) + ' Attendance Reports')
+            AutoGrid.num_zoom_attendance_reports = len(AutoGrid.zoom_days)
             print(AutoGrid.zoom_days)
 
     def pressedContinue(self):

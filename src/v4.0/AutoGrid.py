@@ -161,457 +161,6 @@ for i in range(0, 200):
 border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
 border_thick_bottom = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thick'))
 
-
-class WelcomeScreen(QDialog):
-    def __init__(self):
-        super(WelcomeScreen, self).__init__()
-        loadUi("welcomescreen.ui", self)
-        self.start_button.clicked.connect(self.startProgram)
-    # launch the month selector widget when the start button is pressed
-    def startProgram(self):
-        month = MonthScreen()
-        widget.addWidget(month)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-
-class ZoomFileScreen(QDialog):
-    def __init__(self):
-        super(ZoomFileScreen, self).__init__()
-        loadUi("zoomfile.ui", self)
-        # for browse button
-        self.browse_button.clicked.connect(self.browseReports)
-        # for next button
-        self.next_button_2.clicked.connect(self.nextScreen)
-
-    # function to browse files and return a string list with all of the files
-    def browseReports(self):
-        global zoom_attendance_reports
-        global zoom_days
-        # get the names of all the attendance reports
-        # allow both xlsx and csv so that people can't mess up
-        aTuple = QFileDialog.getOpenFileNames(self, 'open files', '', 'CSV files (*.csv)')
-        # place those names in a global list if they selected the correct number of files
-        if len(aTuple[0]) == num_zoom_attendance_reports:
-            zoom_attendance_reports *= 0
-            zoom_days *= 0
-            for i in range(0, len(aTuple[0])):
-                zoom_attendance_reports.append(aTuple[0][i])
-            # now get the day of each file and put it in another list with the same indexes
-            for i in range(0, len(zoom_attendance_reports)):
-                temp = zoom_attendance_reports[i]
-                lastIndex = len(temp) - 1
-                # if there is a dash and an h then it is extra long
-                if ('-1' in temp or '-2' in temp) and 'h' in temp:
-                    # if it is a double digit number we have to go back 9 spaces
-                    # this means it is a double digit date
-                    if lastIndex - 8 >= 0 and temp[lastIndex - 8].isdigit():
-                        zoom_days.append(temp[lastIndex - 8] + temp[lastIndex - 7] + temp[lastIndex - 6] + temp[lastIndex - 5] + temp[lastIndex - 4])
-                    # this means it is a single digit date
-                    else:
-                        zoom_days.append(temp[lastIndex - 7] + temp[lastIndex - 6] + temp[lastIndex - 5] + temp[lastIndex - 4])
-                    
-                # if there is a dash at all it means it is a double day
-                elif ('-1' in temp) or ('-2' in temp):
-                    # this means it is a double digit date
-                    if lastIndex - 7 >= 0 and temp[lastIndex - 7].isdigit():
-                        zoom_days.append(temp[lastIndex - 7] + temp[lastIndex - 6] + temp[lastIndex - 5] + temp[lastIndex - 4])
-                    # this means it is a single digit date
-                    else:
-                        zoom_days.append(temp[lastIndex - 6] + temp[lastIndex - 5] + temp[lastIndex - 4])
-
-                # this means it is a review day
-                elif temp[lastIndex - 4] == 'r':
-                    # we have 2 options
-                    # double digit day with an r at the end
-                    if (lastIndex - 6) >= 0 and temp[lastIndex - 6].isdigit():
-                        zoom_days.append(temp[lastIndex - 6] + temp[lastIndex - 5] + temp[lastIndex - 4])
-                    # single digit day with an r at the end
-                    else:
-                        zoom_days.append(temp[lastIndex - 5] + temp[lastIndex - 4])
-                # this means it is a hybrid session
-                elif temp[lastIndex - 4] == 'h':
-                    # we have 2 options
-                    # double digit day with an h at the end
-                    if (lastIndex - 6) >= 0 and temp[lastIndex - 6].isdigit():
-                        zoom_days.append(temp[lastIndex - 6] + temp[lastIndex - 5] + temp[lastIndex - 4])
-                    # single digit day with an h at the end
-                    else:
-                        zoom_days.append(temp[lastIndex - 5] + temp[lastIndex - 4])
-                # this means it is a double digit normal day
-                elif (lastIndex - 5) >= 0 and temp[lastIndex - 5].isdigit():
-                    zoom_days.append(temp[lastIndex - 5] + temp[lastIndex - 4])
-                # this means that it is a single digit normal date
-                else:
-                    zoom_days.append(temp[lastIndex - 4])
-            self.error_2.setText('All ' + str(num_zoom_attendance_reports) + ' reports received')
-    # launch the program widget once they have input all files
-    def nextScreen(self):
-        errors = 0
-        # if they don't select enough files or if they select too many files it doesn't proceed and an error message pops up
-        if len(zoom_attendance_reports) != num_zoom_attendance_reports:
-            errors += 1
-            self.error_2.setText('Please select ' + str(num_zoom_attendance_reports) + ' grid files')
-        else:
-            self.error_2.setText('')
-            program = ProgramScreen()
-            widget.addWidget(program)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-
-class ProgramScreen(QDialog):
-    def __init__(self):
-        super(ProgramScreen, self).__init__()
-        loadUi("program.ui", self)
-        # for the browse buttons
-        self.grid_browse.clicked.connect(self.browseFilesGrid)
-        self.attendance_sheet_browse.clicked.connect(self.browseFilesAttendanceSheets)
-        # when run button is pressed
-        self.run_button.clicked.connect(self.runProgram)
-
-    # function for browsing files
-    def browseFilesGrid(self):
-        fileName=QFileDialog.getOpenFileName(self, 'open file', '','XLSX files (*.xlsx)')
-        self.grid_name.setText(fileName[0])
-    def browseFilesAttendanceSheets(self):
-        ############################################################################################################################################check back on this os.getcwd() vs '/home'
-        fileName=QFileDialog.getOpenFileName(self, 'open file', '', 'XLSX files (*.xlsx)')
-        self.attendance_sheet_name.setText(fileName[0])
-    # function for extracting variables
-    def runProgram(self):
-        global num_observations
-        global num_exams
-        global grid_name
-        global attendance_sheet_name
-        global inPerson
-        # need to make sure they fully input all of the data before pressing run so the program doesn't crash
-        errors = 0
-        # start to take in the input
-        # don't proceed if they leave a line blank except for the attendance_sheet_name, which is optional
-        if len(self.grid_name.text()) == 0:
-            self.grid_error.setText("Please select your grid.")
-            errors += 1
-        else:
-            self.grid_error.setText('')
-            grid_name = self.grid_name.text()
-        if len(self.attendance_sheet_name.text()) == 0:
-            inPerson = False
-        else:
-            self.attendance_sheet_error.setText('')
-            attendance_sheet_name = self.attendance_sheet_name.text()
-            inPerson = True
-        if len(self.num_observations.text()) == 0:
-            self.error_4.setText("Please fill in this field.")
-            errors += 1
-        else:
-            self.error_4.setText('')
-            num_observations = int(self.num_observations.text())
-
-        if len(self.num_exams.text()) == 0:
-            self.error_6.setText("Please fill in this field.")
-            errors += 1
-        else:
-            self.error_6.setText('')
-            num_exams = int(self.num_exams.text())
-
-        # if they have been observed at least once we have to launch the observations page
-        global done_observations
-        if errors == 0 and num_observations > 0:
-            observation_page = ObservationScreen()
-            widget.addWidget(observation_page)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-        elif errors == 0 and int(num_observations) == 0:
-            done_observations = 1
-        if errors == 0 and num_exams > 0 and done_observations == 1:
-            review_page = ReviewScreen()
-            widget.addWidget(review_page)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-        if errors == 0 and num_observations == 0 and num_exams == 0:
-            loading_screen = LoadingScreen()
-            widget.addWidget(loading_screen)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-
-class ObservationScreen(QDialog):
-    def __init__(self):
-        super(ObservationScreen, self).__init__()
-        loadUi("observations.ui", self)
-        # once we press the 'Done' button, we want to store all the info of the mentors' names
-        self.done_button.clicked.connect(self.storeMentorNames)
-
-    def storeMentorNames(self):
-        errors = 0
-        global mentors
-        if num_observations > 0:
-            if len(self.first_name_1.text()) == 0 and len(self.last_name_1.text()) == 0:
-                self.error_1a.setText('Please fill in this field')
-                self.error_1b.setText('Please fill in this field')
-                errors += 2
-            elif len(self.first_name_1.text()) == 0 or len(self.last_name_1.text()) == 0:
-                if len(self.first_name_1.text()) == 0:
-                    self.error_1a.setText('Please fill in this field')
-                    self.error_1b.setText('')
-                    errors += 1
-                if len(self.last_name_1.text()) == 0:
-                    self.error_1b.setText('Please fill in this field')
-                    self.error_1a.setText('')
-                    errors += 1
-            else:
-                self.error_1a.setText('')
-                self.error_1b.setText('')
-                mentors[str(self.first_name_1.text())] = str(self.last_name_1.text())
-        if num_observations > 1:
-            if len(self.first_name_2.text()) == 0 and len(self.last_name_2.text()) == 0:
-                self.error_2a.setText('Please fill in this field')
-                self.error_2b.setText('Please fill in this field')
-                errors += 2
-            elif len(self.first_name_2.text()) == 0 or len(self.last_name_2.text()) == 0:
-                if len(self.first_name_2.text()) == 0:
-                    self.error_2a.setText('Please fill in this field')
-                    self.error_2b.setText('')
-                    errors += 1
-                if len(self.last_name_2.text()) == 0:
-                    self.error_2b.setText('Please fill in this field')
-                    self.error_2a.setText('')
-                    errors += 1
-            else:
-                self.error_2a.setText('')
-                self.error_2b.setText('')
-                mentors[str(self.first_name_2.text())] = str(self.last_name_2.text())
-        if num_observations > 2:
-            if len(self.first_name_3.text()) == 0 and len(self.last_name_3.text()) == 0:
-                self.error_3a.setText('Please fill in this field')
-                self.error_3b.setText('Please fill in this field')
-                errors += 2
-            elif len(self.first_name_3.text()) == 0 or len(self.last_name_3.text()) == 0:
-                if len(self.first_name_3.text()) == 0:
-                    self.error_3a.setText('Please fill in this field')
-                    self.error_3b.setText('')
-                    errors += 1
-                if len(self.last_name_3.text()) == 0:
-                    self.error_3b.setText('Please fill in this field')
-                    self.error_3a.setText('')
-                    errors += 1
-            else:
-                self.error_3a.setText('')
-                self.error_3b.setText('')
-                mentors[str(self.first_name_3.text())] = str(self.last_name_3.text())
-        if num_observations > 3:
-            if len(self.first_name_4.text()) == 0 and len(self.last_name_4.text()) == 0:
-                self.error_4a.setText('Please fill in this field')
-                self.error_4b.setText('Please fill in this field')
-                errors += 2
-            elif len(self.first_name_4.text()) == 0 or len(self.last_name_4.text()) == 0:
-                if len(self.first_name_4.text()) == 0:
-                    self.error_4a.setText('Please fill in this field')
-                    self.error_4b.setText('')
-                    errors += 1
-                if len(self.last_name_4.text()) == 0:
-                    self.error_4b.setText('Please fill in this field')
-                    self.error_4a.setText('')
-                    errors += 1
-            else:
-                self.error_4a.setText('')
-                self.error_4b.setText('')
-                mentors[str(self.first_name_4.text())] = str(self.last_name_4.text())
-        # check if we need to loop at the review days too
-        if errors == 0 and num_exams > 0:
-            review_page = ReviewScreen()
-            widget.addWidget(review_page)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-        elif errors == 0 and num_exams == 0:
-            loading_screen = LoadingScreen()
-            widget.addWidget(loading_screen)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-
-class ReviewScreen(QDialog):
-    def __init__(self):
-        super(ReviewScreen, self).__init__()
-        loadUi("reviews.ui", self)
-        self.done_button.clicked.connect(self.storeExamInfo)
-
-    def storeExamInfo(self):
-        global exam_days
-        errors = 0
-
-        # exam days
-        if num_exams > 0:
-            if len(self.exam_1.text()) == 0:
-                self.error_5.setText('Please fill in this field')
-                errors += 1
-            else:
-                self.error_5.setText('')
-                exam_days.append(int(self.exam_1.text()))
-        if num_exams > 1:
-            if len(self.exam_2.text()) == 0:
-                self.error_6.setText('Please fill in this field')
-                errors += 1
-            else:
-                self.error_6.setText('')
-                exam_days.append(int(self.exam_2.text()))
-        if num_exams > 2:
-            if len(self.exam_3.text()) == 0:
-                self.error_7.setText('Please fill in this field')
-                errors += 1
-            else:
-                self.error_7.setText('')
-                exam_days.append(int(self.exam_3.text()))
-        if num_exams > 3:
-            if len(self.exam_4.text()) == 0:
-                self.error_8.setText('Please fill in this field')
-                errors += 1
-            else:
-                self.error_8.setText('')
-                exam_days.append(int(self.exam_4.text()))
-
-        # run the grid filling program
-        if errors == 0:
-            loading_screen = LoadingScreen()
-            widget.addWidget(loading_screen)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-
-class LoadingScreen(QDialog):
-    def __init__(self):
-        super(LoadingScreen, self).__init__()
-        loadUi("load.ui", self)
-        runAutoGrid()
-        runAutoGridZoom()
-        self.complete()
-
-    def complete(self):
-       self.label_2.setText('Your grid has been completed')
-
-class NameScreen(QDialog):
-    def __init__(self, first_name_1, last_name_1, first_name_2, last_name_2):
-        super().__init__()
-        self.first_name_1 = first_name_1
-        self.last_name_1 = last_name_1
-        self.first_name_2 = first_name_2
-        self.last_name_2 = last_name_2
-        self.initUI()
-
-    def initUI(self):
-        self.btn = QPushButton('Show Dialog', self)
-        self.btn.move(20,20)
-        self.btn.clicked.connect(self.showDialog)
-
-    def showDialog(self):
-        text, ok = QInputDialog().getText(self, "Your input is required.", "Do the two names below refer to the same person? y or n\n1) " + self.first_name_1 + ' ' + self.last_name_1 + '\n2) ' + self.first_name_2 + ' ' + self.last_name_2 + '                                                                            ')
-        if ok and text:
-            global isSame
-            isSame = text
-
-class MonthScreen(QDialog):
-    def __init__(self):
-        super(MonthScreen, self).__init__()
-        loadUi("months.ui", self)
-        self.january.clicked.connect(self.jan)
-        self.february.clicked.connect(self.feb)
-        self.march.clicked.connect(self.mar)
-        self.april.clicked.connect(self.apr)
-        self.may.clicked.connect(self.mayFunc)
-        self.june.clicked.connect(self.juneFunc)
-        self.july.clicked.connect(self.julyFunc)
-        self.august.clicked.connect(self.aug)
-        self.september.clicked.connect(self.sep)
-        self.october.clicked.connect(self.oct)
-        self.november.clicked.connect(self.nov)
-        self.december.clicked.connect(self.dec)
-
-    def jan(self):
-        global current_month
-        current_month = 1
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def feb(self):
-        global current_month
-        current_month = 2
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def mar(self):
-        global current_month
-        current_month = 3
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def apr(self):
-        global current_month
-        current_month = 4
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def mayFunc(self):
-        global current_month
-        current_month = 5
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def juneFunc(self):
-        global current_month
-        current_month = 6
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def julyFunc(self):
-        global current_month
-        current_month = 7
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def aug(self):
-        global current_month
-        current_month = 8
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def sep(self):
-        global current_month
-        current_month = 9
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def oct(self):
-        global current_month
-        current_month = 10
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def nov(self):
-        global current_month
-        current_month = 11
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-    def dec(self):
-        global current_month
-        current_month = 12
-        zoom = ZoomScreen()
-        widget.addWidget(zoom)
-        widget.setCurrentIndex(widget.currentIndex()+1)
-
-class ZoomScreen(QDialog):
-    def __init__(self):
-        super(ZoomScreen, self).__init__()
-        loadUi("zoom.ui", self)
-        self.next_button.clicked.connect(self.getZoomFiles)
-
-    def getZoomFiles(self):
-        errors = 0
-        global num_zoom_attendance_reports
-        if len(self.num_zoom_attendance_sheets.text()) == 0:
-            errors += 1
-            self.error_1.setText('Please fill in this field')
-        else:
-            self.error_1.setText('')
-            num_zoom_attendance_reports = int(self.num_zoom_attendance_sheets.text())
-
-            if num_zoom_attendance_reports == 0:
-                program = ProgramScreen()
-                widget.addWidget(program)
-                widget.setCurrentIndex(widget.currentIndex()+1)
-            else:
-                zoomFile = ZoomFileScreen()
-                widget.addWidget(zoomFile)
-                widget.setCurrentIndex(widget.currentIndex()+1)
-
 def runAutoGridZoom():
     # open the xlsx grid file
     wb = load_workbook(grid_name)
@@ -677,6 +226,10 @@ def runAutoGridZoom():
             ws.delete_cols(i, 1)
         else:
             i += 1    
+    
+    # add all the exam colorings necessary
+    addExamColor(ws, wb, 'FFD92906', len(exam_days), exam_days)
+    
     
     # every time we add a new column, we make sure all columns have the correct sum formulas
     updatedColCount = ws.max_column
@@ -836,7 +389,27 @@ def runAutoGridZoomHelper(wb, ws, attendance_report, file_day):
                 first_name = str(row[0])
                 last_name = str(row[1])
                 cur_day = int(cur_day)
-                addToGrid(wb, ws, cur_day, first_name, last_name, isDouble, isReview, isHybrid, True)       
+                addToGrid(wb, ws, cur_day, first_name, last_name, isDouble, isReview, isHybrid, True)  
+
+class NameScreen(QDialog):
+    def __init__(self, first_name_1, last_name_1, first_name_2, last_name_2):
+        super().__init__()
+        self.first_name_1 = first_name_1
+        self.last_name_1 = last_name_1
+        self.first_name_2 = first_name_2
+        self.last_name_2 = last_name_2
+        self.initUI()
+
+    def initUI(self):
+        self.btn = QPushButton('Show Dialog', self)
+        self.btn.move(20,20)
+        self.btn.clicked.connect(self.showDialog)
+
+    def showDialog(self):
+        text, ok = QInputDialog().getText(self, "Your input is required.", "Do the two names below refer to the same person? y or n\n1) " + self.first_name_1 + ' ' + self.last_name_1 + '\n2) ' + self.first_name_2 + ' ' + self.last_name_2 + '                                                                            ')
+        if ok and text:
+            global isSame
+            isSame = text     
 
 def runAutoGrid():
     # open the xlsx grid file
@@ -1094,6 +667,10 @@ def addExamColor(ws, wb, color, num, days):
     numColumns = ws.max_column - 1
     for i in range(0, num):
         for j in range(4, numColumns):
+            # if the column is green then we skip it
+            color = ws['{}{}'.format(numToLetter[j], 2)].fill.start_color.index
+            if color == 'FF00CC00':
+                continue
             # if the column number matches with the day we want to fill
             if str(days[i]) == str(ws.cell(row=2, column=j).value):
                 # fill the entire column with the color
@@ -1360,6 +937,7 @@ def addToGrid(wb, ws, curDay, first_name, last_name, isDouble, isReview, isHybri
 
     # if we did not find the name (check = 0) then we add it to the next open row, which was given as a global variable first_blank_row
     if check == 0 and first_blank_row < totals_row:
+        print(first_blank_row)
         ws.cell(row=first_blank_row, column=1).value = reportLast # add the last name to the first column
         ws.cell(row=first_blank_row, column=2).value = reportFirst # add the first name to the second column
         ws.cell(row=first_blank_row, column=curCol).value = 1  # add a '1' to the appropriate cell to show attendance from this person

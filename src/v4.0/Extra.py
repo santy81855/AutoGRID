@@ -61,6 +61,9 @@ class ExtraScreen(QWidget):
         self.observedSelect.addItem('2')
         self.observedSelect.addItem('3')
         self.observedSelect.addItem('4')
+
+        # add signal for if it gets changed
+        self.observedSelect.currentIndexChanged.connect(self.changed)
         
         #border: none;
         #vertical-align: top;
@@ -143,6 +146,9 @@ class ExtraScreen(QWidget):
         self.examSelect.addItem('2')
         self.examSelect.addItem('3')
         self.examSelect.addItem('4')
+
+        # add signal for if it gets changed
+        self.examSelect.currentIndexChanged.connect(self.changed)
         
         #border: none;
         #vertical-align: top;
@@ -187,6 +193,13 @@ class ExtraScreen(QWidget):
         # track mouse movement so we can change cursor
         self.setMouseTracking(True)
 
+    def changed(self):
+        # if the user changes from the default 0 then change the 'Run Program' button to say continue
+        if self.observedSelect.currentIndex() != 0 or self.examSelect.currentIndex() != 0:
+            self.extraButton.setText("Continue")
+        else:
+            self.extraButton.setText("Run Program")
+
     def pressedContinue(self):
         # when the continue button is pressed it sends you to the next screen if a month is selected
         global num_observations
@@ -194,8 +207,47 @@ class ExtraScreen(QWidget):
         # get the current index and set it as the number of observations
         AutoGrid.num_observations = self.observedSelect.currentIndex()
         AutoGrid.num_exams = self.examSelect.currentIndex()
+
+        # make the title of the exam screen customized
+        if AutoGrid.num_exams == 1:
+            config.examScreen.examText.setText("Select the day of the exam:")
+        else:
+            config.examScreen.examText.setText("Select the " + str(AutoGrid.num_exams) + " exam days:")
+
+        # if the user has any observations we need to send them to the observation screen
+        # which is an index higher
+        if self.observedSelect.currentIndex() > 0:
+            # We have to update the observation page here before calling it
+            if AutoGrid.num_observations >= 1:
+                config.observationScreen.vLayout.addLayout(config.observationScreen.mentor1Layout)
+            if AutoGrid.num_observations >= 2:
+                config.observationScreen.vLayout.addLayout(config.observationScreen.mentor2Layout)
+            if AutoGrid.num_observations >= 3:
+                config.observationScreen.vLayout.addLayout(config.observationScreen.mentor3Layout)
+            if AutoGrid.num_observations >= 4:
+                config.observationScreen.vLayout.addLayout(config.observationScreen.mentor4Layout)
+            # add a stretch before the button for extra separation
+            config.observationScreen.vLayout.addStretch(-1)
+            # add the horizontal layout
+            config.observationScreen.vLayout.addLayout(config.observationScreen.hLayout)
+            # add a stretch after the button for extra separation
+            config.observationScreen.vLayout.addStretch(-1)
+            config.observationScreen.setLayout(config.observationScreen.vLayout)
+            
+            # move to the observation page
+            config.stack.setCurrentIndex(6)
+            
+        # if the exams are more than 0 send them to the exam screen
+        elif self.examSelect.currentIndex() > 0:
+            config.stack.setCurrentIndex(7)
+        # otherwise just run the program and launch the loading screen
+        else:
+            config.stack.setCurrentIndex(8)
+            AutoGrid.runAutoGrid()
+            AutoGrid.runAutoGridZoom()
+            config.loadingScreen.loadingText.setText("Your grid is complete!")
+            
         
-        print("hello??")
 
         # move to the next screenn (zoom)
         #config.stack.setCurrentIndex(2)
