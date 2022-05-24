@@ -1,0 +1,12 @@
+Background: 
+    ebony clay: rgba(34, 49, 63, 1)
+
+Button:
+    alice blue: rgba(228, 241, 254, 1)
+    font: 
+        ebony clay: rgba(34, 49, 63, 1)
+
+Text:
+    alice blue: rgba(228, 241, 254, 1)
+
+

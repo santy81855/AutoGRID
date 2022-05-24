@@ -1,0 +1,6 @@
+With this new version the entire backend of the program was overhauled.
+
+Notable changes:
+- Accounts for hybrids sessions
+- Accepts both usage and meeting zoom reports
+- Uses an entirely different method for filling in the grid 
