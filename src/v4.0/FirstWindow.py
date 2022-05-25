@@ -107,7 +107,7 @@ class MainWindow(QFrame):
         self.help = Help.HelpScreen(self)
         self.stack.addWidget(self.help)
         # start on the latest widget for testing purposes
-        #config.stack.setCurrentIndex(9)
+        #config.stack.setCurrentIndex(7)
         #------------------------------------------#
         # add the stacked widget to the vertical layout
         self.layout.addWidget(self.stack, 95)
