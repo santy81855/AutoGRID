@@ -18,6 +18,7 @@ from PyQt5.QtWidgets import QWidget, QPlainTextEdit, QTextEdit
 from PyQt5.QtGui import QColor, QPainter, QTextFormat, QLinearGradient
 import os
 import ctypes
+from PyQt5 import QtTest
 
 import TitleBar, config, AutoGrid, Welcome, FirstWindow
 
@@ -153,11 +154,19 @@ class GridScreen(QWidget):
     def pressedContinue(self):
         # if they have not entered a grid make the label red
         if self.numFiles.text() == '':
-            self.numFiles.setStyleSheet("""
-            background-color:""" + config.numberColor + """;
-            color: black; 
-            text-align:center;
-                                    """)
+            for i in range(0, config.flashNumber):
+                self.numFiles.setStyleSheet("""
+                background-color:""" + config.numberColor + """;
+                color: black; 
+                text-align:center;
+                                        """)
+                QtTest.QTest.qWait(config.waitTime)
+                self.numFiles.setStyleSheet("""
+                    background-color: white;
+                    color: black; 
+                    text-align:center;
+                                            """)
+                QtTest.QTest.qWait(config.waitTime)
         else:
             config.stack.setCurrentIndex(4)
     

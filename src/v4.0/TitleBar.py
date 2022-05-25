@@ -141,6 +141,7 @@ class MyBar(QWidget):
             #self.parent.move(monitor.left(), monitor.top())
             self.parent.showNormal()
             config.isMaximized = False
+            config.mainWin.updateSize()
         # if it is not maximized
         else:
             # if the maximize button is pressed on the menubar, it should call the maximize function of
@@ -149,6 +150,7 @@ class MyBar(QWidget):
             self.parent.showMaximized()
             # toggle isMax so we know the state
             config.isMaximized = True
+            config.mainWin.updateSize()
 
     def btn_min_clicked(self):
         # same with the show minimized

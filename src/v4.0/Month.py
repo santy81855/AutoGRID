@@ -18,6 +18,7 @@ from PyQt5.QtWidgets import QWidget, QPlainTextEdit, QTextEdit
 from PyQt5.QtGui import QColor, QPainter, QTextFormat, QLinearGradient
 import os
 import ctypes
+from PyQt5 import QtTest
 
 import TitleBar, config, AutoGrid, Welcome, FirstWindow
 
@@ -42,7 +43,7 @@ class MonthScreen(QWidget):
         font.setFixedPitch( True )
         font.setPointSize( parent.width() / 30 )
         self.monthText.setFont(font)
-        self.monthText.setText("Select the month of attendance:")
+        self.monthText.setText('Select the month of attendance:')
         self.monthText.setAlignment(QtCore.Qt.AlignCenter)
 
         # create a horizontal layout to put the dropdown in
@@ -75,8 +76,8 @@ class MonthScreen(QWidget):
         self.monthSelect.setStyleSheet("""
             text-align:center;
             border-radius: 5px;
-            color: """ + config.backgroundColor + """;
-            background-color: """ + config.accentColor + """;
+            color: black;
+            background-color: white;
         """)
         font2 = QFont()
         font2.setFamily("Serif")
@@ -141,6 +142,22 @@ class MonthScreen(QWidget):
             AutoGrid.current_month = self.monthSelect.currentIndex()
             # move to the next screenn (zoom)
             config.stack.setCurrentIndex(2)
+        else:
+            for i in range(0, config.flashNumber):
+                self.monthSelect.setStyleSheet("""
+                    text-align:center;
+                    border-radius: 5px;
+                    color:black;
+                    background-color:"""+config.numberColor+""";
+                """)
+                QtTest.QTest.qWait(config.waitTime)
+                self.monthSelect.setStyleSheet("""
+                    text-align:center;
+                    border-radius: 5px;
+                    color: black;
+                    background-color: white;
+                """)
+                QtTest.QTest.qWait(config.waitTime)
     
     def mouseMoveEvent(self, event):
         QApplication.setOverrideCursor(Qt.ArrowCursor)

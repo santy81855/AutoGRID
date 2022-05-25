@@ -71,8 +71,8 @@ class ExtraScreen(QWidget):
         self.observedSelect.setStyleSheet("""
             text-align:center;
             border-radius: 5px;
-            color: """ + config.backgroundColor + """;
-            background-color: """ + config.accentColor + """;
+            color: black;
+            background-color: white;
         """)
         observedDropdownFont = QFont()
         observedDropdownFont.setFamily("Serif")
@@ -156,8 +156,8 @@ class ExtraScreen(QWidget):
         self.examSelect.setStyleSheet("""
             text-align:center;
             border-radius: 5px;
-            color: """ + config.backgroundColor + """;
-            background-color: """ + config.accentColor + """;
+            color: black;
+            background-color: white;
         """)
         examDropdownFont = QFont()
         examDropdownFont.setFamily("Serif")

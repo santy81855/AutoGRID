@@ -156,9 +156,9 @@ class PersonScreen(QWidget):
         global inPerson
         # if the qlabel is blank then there is no in person attendance
         if self.numFiles.text() == '':
-            AutoGrid.inPerson == False
+            AutoGrid.inPerson = False
         else:
-            AutoGrid.inPerson == True
+            AutoGrid.inPerson = True
             
         config.stack.setCurrentIndex(5)
     

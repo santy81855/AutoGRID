@@ -40,13 +40,20 @@ observationScreen = None
 examScreen = None
 # loading screen
 loadingScreen = None
-
+# name help screen
+nameScreen = None
+# help screen
+helpScreen = None
 
 # variable to be able to snap to sides and corners
 leftDown = False
 upDown = False
 downDown = False
 rightDown = False
+
+# wait time
+waitTime = 300
+flashNumber = 3
 
 # variables for color settings
 bracketColor = "#D08770"
@@ -57,6 +64,7 @@ functionColor = "#88C0D0"
 commentColor = "#4C566A"
 textColor = "#D8DEE9"
 accentColor = "#8FBCBB"
+accentColor2 = "#A3BE8C"
 numberColor = "#BF616A"
 backgroundColor = "#2E3440"
 lineNumberColor = "#8FBCBB"

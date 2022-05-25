@@ -29,7 +29,7 @@ class WelcomeScreen(QWidget):
         
         # create the layout
         self.vLayout = QVBoxLayout()
-        self.vLayout.setSpacing(0)
+        self.vLayout.setSpacing(40)
         self.welcomeText = QLabel(self)
         self.welcomeText.setStyleSheet("""
             border: none;
@@ -42,7 +42,7 @@ class WelcomeScreen(QWidget):
         font.setFixedPitch( True )
         font.setPointSize( parent.width() / 20 )
         self.welcomeText.setFont(font)
-        self.welcomeText.setText("Welcome to AutoGrid!")
+        self.welcomeText.setText('Welcome to <b style="color: #A3BE8C;">AutoGrid!</b>')
         self.welcomeText.setAlignment(QtCore.Qt.AlignCenter)
 
         self.pressStart = QLabel(self)
@@ -57,10 +57,8 @@ class WelcomeScreen(QWidget):
         font2.setFixedPitch( True )
         font2.setPointSize( parent.width() / 45 )
         self.pressStart.setFont(font2)
-        self.pressStart.setText("Press 'Start' to begin:")
+        #self.pressStart.setText('Click <a style="color: #A3BE8C;">Start</a>:')
         self.pressStart.setAlignment(QtCore.Qt.AlignCenter)
-        
-        
         
         # create a button to continue
         self.welcomeButton = QPushButton()
@@ -90,21 +88,78 @@ class WelcomeScreen(QWidget):
         self.hLayout.addWidget(self.welcomeButton)
         self.hLayout.addStretch(-1)
 
+        # create horizontal layout for the help button
+        self.helpLayout = QHBoxLayout()
+        self.helpLayout.setSpacing(20)
+        self.helpLayout.addStretch(-1)
+
+        # add qlabel asking if they need help naming attendance sheets
+        self.helpText = QLabel(self)
+        self.helpText.setStyleSheet("""
+            border: none;
+            vertical-align: top;
+            text-align:center;
+            color: """ + config.accentColor2 + """;
+        """)
+        helpFont = QFont()
+        helpFont.setFamily("Serif")
+        helpFont.setFixedPitch( True )
+        helpFont.setPointSize( parent.width() / 100 )
+        self.helpText.setFont(helpFont)
+        self.helpText.setText('How to name Zoom attendance reports: ')
+        self.helpText.setAlignment(QtCore.Qt.AlignCenter)
+
+        # add the text to the helpLayout
+        self.helpLayout.addWidget(self.helpText)
+
+        # create help button
+        self.helpButton = QPushButton()
+        # create the function for when its pressed
+        self.helpButton.clicked.connect(self.pressedGuide)
+        self.helpButton.setText("Guide")
+        self.helpButton.setStyleSheet("""
+            border-radius: 20px;
+            background-color: """ + config.accentColor + """;
+            color: """ + config.backgroundColor + """;
+                                        """)
+        # set the size of the button
+        self.helpButton.setFixedHeight(parent.width() / 40)
+        self.helpButton.setFixedWidth(parent.width() / 12)
+        
+        # set the font of teh button
+        helpButtonFont2 = QFont()
+        helpButtonFont2.setFamily("Serif")
+        helpButtonFont2.setFixedPitch( True )
+        helpButtonFont2.setPointSize( parent.width() / 80 )
+        self.helpButton.setFont(helpButtonFont2)
+
+        # add button to the help layout
+        self.helpLayout.addWidget(self.helpButton)
+        self.helpLayout.addStretch(-1)
+
         # add a stretch before the button for extra separation
         self.vLayout.addStretch(-1)
         # add the qlabel to the vlayout
         self.vLayout.addWidget(self.welcomeText)
-        self.vLayout.addWidget(self.pressStart)
         # add a stretch before the button for extra separation
         self.vLayout.addStretch(-1)
         # add the horizontal layout
         self.vLayout.addLayout(self.hLayout)
+        self.vLayout.addStretch(-1)
+        self.vLayout.addLayout(self.helpLayout)
         # add a stretch before the button for extra separation
         self.vLayout.addStretch(-1)
         self.setLayout(self.vLayout)
 
+        self.setMouseTracking(True)
+
     def pressedStart(self):
         # when the start button is pressed it sends you to the month selection screen
         config.stack.setCurrentIndex(1)
+    
+    def pressedGuide(self):
+        # when the start button is pressed it sends you to the name help
+        config.stack.setCurrentIndex(9)
         
-        
+    def mouseMoveEvent(self, event):
+        QApplication.setOverrideCursor(Qt.ArrowCursor)

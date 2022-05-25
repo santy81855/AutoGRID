@@ -71,7 +71,7 @@ isSame = '' # used to determine nicknames
 zoom_attendance_reports = []
 num_zoom_attendance_reports = 0
 zoom_days = []
-inPerson = True # used to determine if they have any inPerson attendance to report
+inPerson = False # used to determine if they have any inPerson attendance to report
 isUsage = True
 # create a dictionary that stores weekdays
 weekdays = {}

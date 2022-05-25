@@ -101,7 +101,8 @@ class ExamScreen(QWidget):
         for i in range(0, 6):
             self.horizontalLayouts.append(QHBoxLayout())
             self.horizontalLayouts[i].setSpacing(20)
-            self.horizontalLayouts[i].addStretch(-1)
+            if i < 5:
+                self.horizontalLayouts[i].addStretch(-1)
 
         # create the buttons
         self.buttonArr = []
