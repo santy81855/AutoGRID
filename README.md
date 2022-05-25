@@ -1,4 +1,5 @@
-# AutoGrid_Install
+# AutoGrid
+![screenshot](https://github.com/santy81855/AutoGrid/images/main_screen.png)
 
 ## This installer is for windows computers only.
   - Here are some ways to run windows programs on MacOS. [LINK](https://www.howtogeek.com/187359/5-ways-to-run-windows-software-on-a-mac/ "Click here")
