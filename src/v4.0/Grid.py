@@ -168,7 +168,7 @@ class GridScreen(QWidget):
                                             """)
                 QtTest.QTest.qWait(config.waitTime)
         else:
-            config.stack.setCurrentIndex(4)
+            config.stack.setCurrentIndex(3)
     
     def mouseMoveEvent(self, event):
         QApplication.setOverrideCursor(Qt.ArrowCursor)

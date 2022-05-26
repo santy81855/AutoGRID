@@ -75,16 +75,15 @@ class MainWindow(QFrame):
         self.stack.addWidget(self.welcome)
 
         #------------------------------------------#
-        # create the month screen
-        self.month = Month.MonthScreen(self)
         # index 1 needs to be the month selection screen
+        self.month = Month.MonthScreen(self)
         self.stack.addWidget(self.month)
-        # index 2 needs to be the zoom screen
-        self.zoom = Zoom.ZoomScreen(self)
-        self.stack.addWidget(self.zoom)
-        # index 3 needs to be the grid screen
+        # index 2 needs to be the grid screen
         self.grid = Grid.GridScreen(self)
         self.stack.addWidget(self.grid)
+        # index 3 needs to be the zoom screen
+        self.zoom = Zoom.ZoomScreen(self)
+        self.stack.addWidget(self.zoom)
         # index 4 is in-person attendance
         self.person = Person.PersonScreen(self)
         self.stack.addWidget(self.person)
@@ -112,13 +111,11 @@ class MainWindow(QFrame):
         # add the stacked widget to the vertical layout
         self.layout.addWidget(self.stack, 95)
 
-        
-        
         # set the layout
         self.setLayout(self.layout)
         
         # the min height will be 600 x 600
-        self.setMinimumSize(600, 600)
+        self.setMinimumSize(config.minSize, config.minSize)
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.pressing = False
         self.movingPosition = False
@@ -425,61 +422,61 @@ class MainWindow(QFrame):
             # resize from the top
             if self.top == True:
                 # resize from the top
-                if self.height() - event.pos().y() >= 600:
+                if self.height() - event.pos().y() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y() + event.pos().y(), self.width(), self.height() - event.pos().y())
             # resize from the top left
             if self.tl == True:
                 # move both dimensions if both boundaries are okay
-                if self.width() - event.pos().x() >= 600 and self.height() - event.pos().y() >= 600:
+                if self.width() - event.pos().x() >= config.minSize and self.height() - event.pos().y() >= config.minSize:
                     self.setGeometry(self.pos().x() + event.pos().x(), self.pos().y() + event.pos().y(), self.width() - event.pos().x(), self.height() - event.pos().y())
                 # move only top if width is already at its smallest
-                elif self.height() - event.pos().y() >= 600:
+                elif self.height() - event.pos().y() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y() + event.pos().y(), self.width(), self.height() - event.pos().y())
                 # move only left if height is at its smallest
-                elif self.width() - event.pos().x() > 600:
+                elif self.width() - event.pos().x() > config.minSize:
                     self.setGeometry(self.pos().x() + event.pos().x(), self.pos().y(), self.width() - event.pos().x(), self.height())
             
             # resize top right
             if self.tr == True:
                 pos = event.pos().x() 
                 # top right
-                if self.height() - event.pos().y() >= 600 and self.width() >= 600:
+                if self.height() - event.pos().y() >= config.minSize and self.width() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y() + event.pos().y(), pos, self.height() - event.pos().y())
 
                 # resize from the top
-                elif self.height() - event.pos().y() >= 600:
+                elif self.height() - event.pos().y() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y() + event.pos().y(), self.width(), self.height() - event.pos().y())
-                elif self.width() >= 600:
+                elif self.width() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y(), pos, self.height()) 
 
             # resize from the left to the right
             if self.left == True:
                 # resize from the left
-                if self.width() - event.pos().x() > 600:
+                if self.width() - event.pos().x() > config.minSize:
                     self.setGeometry(self.pos().x() + event.pos().x(), self.pos().y(), self.width() - event.pos().x(), self.height())
             # resize from the right
             if self.right == True:
                 pos = event.pos().x()
-                if self.width() >= 600:
+                if self.width() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y(), pos, self.height()) 
             # resize from the bottom
             if self.bottom == True:
                 pos = event.pos().y()
-                if self.height() >= 600:
+                if self.height() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y(), self.width(), pos) 
             # resize from the bottom right
             if self.br == True:
                 pos = event.pos()
-                if self.height() >= 600 and self.width() >= 600:
+                if self.height() >= config.minSize and self.width() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y(), pos.x(), pos.y()) 
             # resize from the bottom left
             if self.bl == True:
                 pos = event.pos().y()
-                if self.width() - event.pos().x() > 600 and self.height() >= 600:
+                if self.width() - event.pos().x() > config.minSize and self.height() >= config.minSize:
                     self.setGeometry(self.pos().x() + event.pos().x(), self.pos().y(), self.width() - event.pos().x(), pos)
-                elif self.height() >= 600:
+                elif self.height() >= config.minSize:
                     self.setGeometry(self.pos().x(), self.pos().y(), self.width(), pos) 
-                elif self.width() - event.pos().x() > 600:
+                elif self.width() - event.pos().x() > config.minSize:
                     self.setGeometry(self.pos().x() + event.pos().x(), self.pos().y(), self.width() - event.pos().x(), self.height())
             
     # if the mouse button is released then tag pressing as false

@@ -204,7 +204,7 @@ class ZoomScreen(QWidget):
             print(AutoGrid.zoom_days)
 
     def pressedContinue(self):
-        config.stack.setCurrentIndex(3)
+        config.stack.setCurrentIndex(4)
             
         
         # convert it into a month

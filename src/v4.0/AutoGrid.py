@@ -92,8 +92,8 @@ modality[3] = 'HP'
 modality[4] = 'HR'
 modality[5] = 'HP'
 modality[6] = 'HR'
-modality[7] = 'RP'
-modality[8] = 'RR'
+modality[7] = 'P'
+modality[8] = 'R'
 
 # create a dictionary to take you from the first column of a day to the correct one based on what
 # modality you need
