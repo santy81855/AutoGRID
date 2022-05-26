@@ -92,8 +92,8 @@ modality[3] = 'HP'
 modality[4] = 'HR'
 modality[5] = 'HP'
 modality[6] = 'HR'
-modality[7] = 'P'
-modality[8] = 'R'
+modality[7] = 'RP'
+modality[8] = 'RR'
 
 # create a dictionary to take you from the first column of a day to the correct one based on what
 # modality you need
@@ -220,11 +220,13 @@ def runAutoGridZoom():
         if session_types[temp_day].review_person == False and str(ws.cell(row=1,column=i).value) == 'RP':
             ws.delete_cols(i, 1)
         else:
+            ws.cell(row=1,column=i).value = 'P'
             i += 1    
         # check if remote _review was used
         if session_types[temp_day].review_remote == False and str(ws.cell(row=1,column=i).value) == 'RR':
             ws.delete_cols(i, 1)
         else:
+            ws.cell(row=1,column=i).value = 'R'
             i += 1    
     
     # add all the exam colorings necessary
