@@ -7,7 +7,7 @@
 
 ## How to use:
 
-- ### Step 1: Download the installer: [Click Here](https://github.com/santy81855/AutoGrid/raw/main/AutoGrid_install_v4.0.exe "Download")
+- ### Step 1: Download the installer: [Click Here](https://github.com/santy81855/AutoGrid/raw/main/AutoGrid_install_v4.1.exe "Download")
 
 - ### Step 2: Open the installer and follow the prompts to finish downloading the program.
 
